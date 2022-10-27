@@ -1,7 +1,7 @@
 """Contains a configurable PyTorch class for the SampleCNN model."""
 
 
-from torch import nn
+from torch import nn, Tensor
 import numpy as np
 from typing import List, Dict
 
@@ -10,31 +10,31 @@ class SampleCNN(nn.Module):
     """Configurable PyTorch class for SampleCNN.
 
     Attributes:
-        n_blocks: Number of middle convolutional blocks (equal to n_total_blocks - 2).
-        output_size: Number of output channels for last block.
-        pool_size: Size of pooling kernel and pooling stride for middle blocks.
-        input_size: Size (length) of input.
-        all_blocks: nn.Sequential() object for all blocks.
+        n_blocks (int): Number of middle convolutional blocks (equal to n_total_blocks - 2).
+        output_size (int): Number of output channels for last block.
+        pool_size (int): Size of pooling kernel and pooling stride for middle blocks.
+        input_size (int): Size (length) of input.
+        all_blocks (nn.Sequential): PyTorch Sequential object containing all blocks.
     """
 
-    def __init__(self, n_blocks: int, n_channels: List, output_size: int, conv_kernel_size: int, pool_size: int, activation: str = "relu", first_block_params: Dict = None, input_size: int = None) -> None:
-        """Initializes SampleCNN object.
+    def __init__(self, n_blocks: int, n_channels: List[int], output_size: int, conv_kernel_size: int, pool_size: int, activation: str = "relu", first_block_params: Dict[str, int] = None, input_size: int = None) -> None:
+        """Initialization.
 
         Args:
-            n_blocks: Number of middle convolutional blocks (equal to n_total_blocks - 2).
-            n_channels: List of number of (output) channels for middle blocks.
+            n_blocks (int): Number of middle convolutional blocks (equal to n_total_blocks - 2).
+            n_channels (list): List of number of (output) channels for middle blocks.
                 length: n_blocks
-            output_size: Number of output channels for last block.
-            conv_kernel_size: Size of convolutional kernel for middle blocks.
+            output_size (int): Number of output channels for last block.
+            conv_kernel_size (int): Size of convolutional kernel for middle blocks.
                 Convolution stride is equal to 1 for middle blocks.
-            pool_size: Size of pooling kernel and pooling stride for middle blocks.
+            pool_size (int): Size of pooling kernel and pooling stride for middle blocks.
                 Kernel size is equal to stride to ensure even division of input size.
-            activation: Type of activation to use for all blocks.
+            activation (str): Type of activation to use for all blocks.
                 Supported values: "relu", "leaky_relu"
-            first_block_params: Dictionary describing first block, with keys/values:
+            first_block_params (dict): Dictionary describing first block, with keys/values:
                 out_channels: Number of output channels.
                 conv_size: Size of convolutional kernel and convolution stride (kernel size is equal to stride to ensure even division of input size).
-            input_size: Size (length) of input.
+            input_size (int): Size (length) of input.
         
         Returns: None
         """
@@ -114,7 +114,18 @@ class SampleCNN(nn.Module):
         all_blocks_list = [first_block] + middle_blocks + [last_block]
         self.all_blocks = nn.Sequential(*all_blocks_list)
     
-    def forward(self, x):
+    def forward(self, x: Tensor) -> Tensor:
+        """Forward pass.
+
+        Args:
+            x (torch.Tensor):
+                size: (batch_size, 1, input_size)
+        
+        Returns:
+            output (torch.Tensor): Model output.
+                size: (batch_size, output_size)
+        """
+
         # forward pass through all blocks:
         output = self.all_blocks(x)
         # remove temporal dimension (since it is size 1):
