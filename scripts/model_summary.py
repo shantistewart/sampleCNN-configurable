@@ -1,4 +1,4 @@
-"""Script to display the summary of the SampleCNN model."""
+"""Script to display the summary of the SampleCNN encoder."""
 
 
 import os

@@ -1,4 +1,4 @@
-"""Contains a configurable PyTorch class for the SampleCNN model."""
+"""Contains a configurable PyTorch class for the SampleCNN encoder."""
 
 
 from torch import nn, Tensor
