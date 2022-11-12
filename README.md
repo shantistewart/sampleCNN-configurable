@@ -30,7 +30,7 @@ sampleCNN-configurable/
 
 ## References
 
-* [Sample-level Deep Convolutional Neural Networks for Music Auto-tagging Using Raw Waveforms](https://arxiv.org/abs/1703.01789)
+* ["Sample-level Deep Convolutional Neural Networks for Music Auto-tagging Using Raw Waveforms"](https://arxiv.org/abs/1703.01789)
 * [github.com/kyungyunlee/sampleCNN-pytorch](https://github.com/kyungyunlee/sampleCNN-pytorch)
 * [github.com/jongpillee/sampleCNN](https://github.com/jongpillee/sampleCNN)
 * [github.com/tae-jun/sample-cnn](https://github.com/tae-jun/sample-cnn)
